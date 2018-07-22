@@ -14,8 +14,9 @@ import javax.swing.text.PlainDocument;
 
 import com.braintobytes.utils.Util;
 
+
 @SuppressWarnings("serial")
-public class BoxGUI extends JPanel{
+public class BoxGUI extends JPanel {
 	
 	private JTextField[][] textfields = new JTextField[3][3];
 	private Font font = new Font("TimesRoman", Font.PLAIN, 50);
@@ -24,17 +25,11 @@ public class BoxGUI extends JPanel{
 	
 	private UI parent;
 		
-	/**
-	 * @param parent
-	 */
 	public BoxGUI(UI parent) {
 		this.parent = parent;
 		init();	
 	}
 	
-	/**
-	 * 
-	 */
 	private void init() {
 		
 		this.setLayout(new GridLayout(3,3));
@@ -42,9 +37,6 @@ public class BoxGUI extends JPanel{
 		this.setVisible(true);
 	}
 	
-	/**
-	 * 
-	 */
 	private void setTextFields() {
 		
 		int row = 0;
@@ -89,26 +81,15 @@ public class BoxGUI extends JPanel{
 	
 	}
 	
-	/* (non-Javadoc)
-	 * @see javax.swing.JComponent#getPreferredSize()
-	 */
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(200, 200);	
 	}
 	
-	/**
-	 * @param row
-	 * @param col
-	 * @return
-	 */
 	public JTextField getTextField(int row, int col) {
 		return textfields[row][col];
 	}
 	
-	/**
-	 * 
-	 */
 	public void clearBox() {
 		
 		for(JTextField[] fields : textfields) {
@@ -126,10 +107,6 @@ public class BoxGUI extends JPanel{
 	/**
 	 * {@link https://stackoverflow.com/questions/3519151/how-to-limit-the-number-of-characters-in-jtextfield}
 	 * 
-	 */
-	/**
-	 * @author law
-	 *
 	 */
 	private class JTextFieldLimit extends PlainDocument {
 	  private int limit;

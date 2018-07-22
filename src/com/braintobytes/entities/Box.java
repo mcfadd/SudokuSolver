@@ -1,38 +1,28 @@
 package com.braintobytes.entities;
 
-public class Box {
+import java.io.Serializable;
+
+
+public class Box implements Serializable {
 
 	private Cell[] cells;
 	private int ID;
 	
-	/**
-	 * @param id
-	 */
 	public Box(int id) {
+		
 		this.ID = id;
 		cells = new Cell[9];
 	}
 	
-	/**
-	 * @param cell
-	 * @param index
-	 */
 	public void addCell(Cell cell, int index) {
 		cells[index] = cell;
 	}
 	
-	/**
-	 * @param index
-	 * @return
-	 */
 	public Cell getCell(int index) {
 		return cells[index];
 	}
 	
 	// returns an array of integers where a 1 indicates that index value is in the Box
-	/**
-	 * @return
-	 */
 	public int[] getValuesInBox() {
 		
 		int[] result = new int[9];
@@ -48,10 +38,6 @@ public class Box {
 	}
 	
 	// only accepts values in range [0 ,3)
-	/**
-	 * @param row
-	 * @return
-	 */
 	public int[] getValuesInRow(int row) {
 		
 		int[] result = new int[9];
@@ -75,10 +61,6 @@ public class Box {
 	}
 	
 	// only accepts values in range [0 ,3)
-	/**
-	 * @param col
-	 * @return
-	 */
 	public int[] getValuesInColumn(int col) {
 		
 		int[] result = new int[9];
@@ -98,9 +80,6 @@ public class Box {
 	}
 	
 	// for testing
-	/**
-	 * 
-	 */
 	public void printBox() {
 		
 		System.out.println("Box: " + ID);
@@ -118,9 +97,6 @@ public class Box {
 	}
 	
 	// for testing
-	/**
-	 * 
-	 */
 	public void printArrayOfValuesInBox() {
 		
 		System.out.println("Available Values: ");

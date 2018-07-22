@@ -1,11 +1,8 @@
 package com.braintobytes.utils;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 import com.braintobytes.entities.Box;
 import com.braintobytes.entities.Cell;
-import com.braintobytes.userinterface.BoxGUI;
 import com.braintobytes.userinterface.UI;
 
 public class Solver {
@@ -15,19 +12,12 @@ public class Solver {
 	private Box[] boxes;
 	private boolean movingForward = true;
 	
-	/**
-	 * @param ui
-	 */
 	public Solver(UI ui) {
 		
 		this.ui = ui;
 		this.boxes = new Box[9];
 	}
 	
-	/**
-	 * @param display
-	 * @return
-	 */
 	public boolean solve(boolean display) {
 		
 		init();
@@ -65,9 +55,6 @@ public class Solver {
 		
 	}
 	
-	/**
-	 * 
-	 */
 	private void tryNextValue() {
 		
 		int[] testedValues, valuesInBox, valuesInRow, valuesInCol;
@@ -94,10 +81,6 @@ public class Solver {
 		
 	}
 	
-	/**
-	 * @param row
-	 * @return
-	 */
 	private int[] getRow(int row) {
 
 		int[] result, first, second, third;
@@ -124,10 +107,6 @@ public class Solver {
 
 	}
 
-	/**
-	 * @param col
-	 * @return
-	 */
 	private int[] getColumn(int col) {
 
 		int[] result, first, second, third;
@@ -156,72 +135,13 @@ public class Solver {
 
 	}
 	
-	/**
-	 * 
-	 */
 	private void init() {
 		
-		initBoxes(ui);
+		Util.initBoxes(ui, boxes, false);
 		linkCells();
 		this.currentCell = boxes[0].getCell(0);
 	}
-	
-	/**
-	 * @param ui
-	 */
-	private void initBoxes(UI ui) {
 
-		for (int i = 0; i < ui.getPanel().getComponentCount(); i++) {
-			boxes[i] = initIndividualBox(i, ui.getBox(i));
-		}
-
-	}
-
-	/**
-	 * @param index
-	 * @param gui
-	 * @return
-	 */
-	private Box initIndividualBox(int index, BoxGUI gui) {
-
-		Box result = new Box(index);
-		boolean isFinalValue;
-		int initialRow = InitialRow(index);
-		int initialCol = InitialCol(index);
-		int row = initialRow;
-		int col = initialCol;
-		int val;
-		JTextField textTmp;
-
-		for (int j = 0; j < gui.getComponentCount(); j++) {
-
-			textTmp = (JTextField) gui.getComponent(j);
-
-			if ("".equals(textTmp.getText())) {
-
-				val = 0;
-				isFinalValue = false;
-
-			} else {
-
-				val = Integer.parseInt(textTmp.getText());
-				isFinalValue = true;
-			}
-
-			result.addCell(new Cell(row, col++, val, index, isFinalValue), j);
-
-			if (col == initialCol + 3) {
-				col = initialCol;
-				row++;
-			}
-		}
-
-		return result;
-	}
-
-	/**
-	 * 
-	 */
 	private void linkCells() {
 
 		int BoxID = 0;
@@ -260,51 +180,6 @@ public class Solver {
 
 	}
 	
-	/**
-	 * @param BoxID
-	 * @return
-	 */
-	private int InitialRow(int BoxID) {
-		switch (BoxID) {
-
-		case 0:
-		case 1:
-		case 2:
-			return 0;
-		case 3:
-		case 4:
-		case 5:
-			return 3;
-		case 6:
-		case 7:
-		case 8:
-			return 6;
-		}
-		return -1;
-	}
-
-	/**
-	 * @param BoxID
-	 * @return
-	 */
-	private int InitialCol(int BoxID) {
-
-		switch (BoxID) {
-
-		case 0:
-		case 3:
-		case 6:
-			return 0;
-		case 1:
-		case 4:
-		case 7:
-			return 3;
-		case 2:
-		case 5:
-		case 8:
-			return 6;
-		}
-		return -1;
-	}
+	
 
 }

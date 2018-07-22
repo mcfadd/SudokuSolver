@@ -7,24 +7,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.braintobytes.entities.Box;
+import com.braintobytes.entities.Cell;
 import com.braintobytes.userinterface.BoxGUI;
 import com.braintobytes.userinterface.UI;
 
 public class Util {
 
-	private static Solver solver;
-	
-	/**
-	 * 
-	 * @param ui
-	 * @param boxes
-	 */
 	public static void updateDisplay(UI ui, Box[] boxes) {
 
 		int row, col, index;
 		JTextField tmpTextField;
 
-		for (int i = 0; i < ui.getPanel().getComponentCount(); i++) {
+		for (int i = 0; i < boxes.length; i++) {
 
 			BoxGUI tmpBoxGui = ui.getBox(i);
 			Box tmpBox = boxes[i];
@@ -52,16 +46,100 @@ public class Util {
 
 	}
 
+	public static void diaplayLoadedGame(UI ui, Box[] boxes) {
+
+		clearUI(ui);
+		
+		int row, col, index;
+		JTextField tmpTextField;
+
+		for (int i = 0; i < ui.getContentPanel().getComponentCount(); i++) {
+
+			BoxGUI tmpBoxGui = ui.getBox(i);
+			Box tmpBox = boxes[i];
+			row = col = index = 0;
+
+			while (row < 3) {
+
+				tmpTextField = tmpBoxGui.getTextField(row, col++);
+
+				if (tmpBox.getCell(index).getIsFinal()) {
+
+					tmpTextField.setEditable(false);
+					tmpTextField.setForeground(Color.RED);
+
+				}
+
+				if (tmpBox.getCell(index).getCurrentValue() != 0)
+					tmpTextField.setText(tmpBox.getCell(index).getCurrentValue() + "");
+
+				index++;
+				if (col == 3) {
+					row++;
+					col = 0;
+				}
+			}
+
+		}
+
+	}
+
+	protected static void initBoxes(UI ui, Box[] boxes, boolean saveGame) {
+
+		for (int i = 0; i < ui.getContentPanel().getComponentCount(); i++) {
+			boxes[i] = initIndividualBox(i, ui.getBox(i), saveGame);
+		}
+
+	}
+
+	private static Box initIndividualBox(int index, BoxGUI gui, boolean saveGame) {
+
+		Box result = new Box(index);
+		boolean isFinalValue;
+		int initialRow = InitialRow(index);
+		int initialCol = InitialCol(index);
+		int row = initialRow;
+		int col = initialCol;
+		int val;
+		JTextField textTmp;
+
+		for (int j = 0; j < gui.getComponentCount(); j++) {
+
+			textTmp = (JTextField) gui.getComponent(j);
+
+			if ("".equals(textTmp.getText())) {
+
+				val = 0;
+				isFinalValue = false;
+				
+			} else {
+
+				val = Integer.parseInt(textTmp.getText());
+				isFinalValue = true;
+				
+			}
+
+			if (saveGame && !textTmp.getForeground().equals(Color.RED)) {
+
+				isFinalValue = false;
+
+			}
+			
+			result.addCell(new Cell(row, col++, val, index, isFinalValue), j);
+
+			if (col == initialCol + 3) {
+				col = initialCol;
+				row++;
+			}
+		}
+
+		return result;
+	}
+
 	public static boolean checkValidPuzzle(UI ui) {
 		return checkBoxes(ui) && checkRows(ui) && checkColumns(ui);
 	}
-	
-	
-	/**Checking matrix
-	 * 
-	 * @param ui
-	 * @return
-	 */
+
 	private static boolean checkBoxes(UI ui) {
 
 		int[] valuesInBox = new int[9];
@@ -103,12 +181,7 @@ public class Util {
 
 		return true;
 	}
-	
-	/**Check rows
-	 * 
-	 * @param ui
-	 * @return
-	 */
+
 	private static boolean checkRows(UI ui) {
 
 		int[] valuesInRow = new int[9];
@@ -212,20 +285,22 @@ public class Util {
 			}
 
 		} catch (Exception e) {
+			// e.printStackTrace();
 			System.out.println("Exception in checkColumns");
 			return false;
 		}
 
 		return true;
+
 	}
-	
-	/**Generates the puzzle
-	 * 
-	 * @param ui
-	 */
 
 	public static void generateRandomPuzzle(UI ui) {
-		
+
+		boolean solveable = false;
+		Solver solver = new Solver(ui);
+
+		while (!solveable) {
+
 			clearUI(ui);
 
 			SecureRandom random = new SecureRandom();
@@ -261,16 +336,19 @@ public class Util {
 				}
 
 			}
+
+			if (solver.solve(false))
+				solveable = true;
+
+		}
+
+		solver = null;
+
 	}
-	
-	
-	/**Clear UI
-	 * 
-	 * @param ui
-	 */
+
 	public static void clearUI(UI ui) {
 
-		JPanel mainPanel = ui.getPanel();
+		JPanel mainPanel = ui.getContentPanel();
 
 		for (Component gui : mainPanel.getComponents()) {
 
@@ -279,4 +357,84 @@ public class Util {
 		}
 
 	}
+
+	private static int InitialRow(int BoxID) {
+		switch (BoxID) {
+
+		case 0:
+		case 1:
+		case 2:
+			return 0;
+		case 3:
+		case 4:
+		case 5:
+			return 3;
+		case 6:
+		case 7:
+		case 8:
+			return 6;
+		}
+		return -1;
+	}
+
+	private static int InitialCol(int BoxID) {
+
+		switch (BoxID) {
+
+		case 0:
+		case 3:
+		case 6:
+			return 0;
+		case 1:
+		case 4:
+		case 7:
+			return 3;
+		case 2:
+		case 5:
+		case 8:
+			return 6;
+		}
+		return -1;
+	}
+
+	// // for testing
+	// private static void printRow(Solver solver, int row) {
+	//
+	// System.out.println("Row " + row + ":");
+	//
+	// int[] rows = solver.getRow(row);
+	// for (int i = 0; i < 9; i++) {
+	// System.out.print(i + " ");
+	// }
+	//
+	// System.out.println();
+	//
+	// for (int v : rows) {
+	// System.out.print(v + " ");
+	// }
+	//
+	// System.out.println();
+	//
+	// }
+	//
+	// // for testing
+	// private static void printColumn(Solver solver, int col) {
+	//
+	// System.out.println("Coumn " + col + ":");
+	//
+	// int[] cols = solver.getColumn(col);
+	// for (int i = 0; i < 9; i++) {
+	// System.out.print(i + " ");
+	// }
+	//
+	// System.out.println();
+	//
+	// for (int v : cols) {
+	// System.out.print(v + " ");
+	// }
+	//
+	// System.out.println();
+	//
+	// }
+
 }

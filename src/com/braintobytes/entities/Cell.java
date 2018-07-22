@@ -1,20 +1,15 @@
 package com.braintobytes.entities;
 
-public class Cell {
+import java.io.Serializable;
+
+public class Cell implements Serializable {
 
 	private int row, column, currentValue, BoxID;
 	private int[] testedValues = new int[9];	// if 1 at index i, then i has been tested. cal
 	private boolean isFinal;
 	private Cell next, prev;
 	
-	/**
-	 * @param row
-	 * @param col
-	 * @param val
-	 * @param BoxID
-	 * @param isFinal
-	 */
-	public Cell(int row, int col, int val, int BoxID, boolean isFinal){
+	public Cell(int row, int col, int val, int BoxID, boolean isFinal) {
 		
 		this.row = row;
 		this.column = col;
@@ -23,16 +18,10 @@ public class Cell {
 		setCurrentValue(val);
 	}
 	
-	/**
-	 * @return
-	 */
 	public int getCurrentValue() {
 		return currentValue;
 	}
 	
-	/**
-	 * @param val
-	 */
 	public void setCurrentValue(int val) {
 		
 		currentValue = val;
@@ -40,72 +29,42 @@ public class Cell {
 			testedValues[val - 1] = 1;
 	}
 	
-	/**
-	 * 
-	 */
 	public void clearTestedValues() {
 		testedValues = new int[9];
 	}
 	
-	/**
-	 * @return
-	 */
 	public int[] getTestedValues() {
 		return testedValues;
 	}
 	
-	/**
-	 * @return
-	 */
 	public int getRow() {
 		return row;
 	}
 
-	/**
-	 * @return
-	 */
 	public int getColumn() {
 		return column;
 	}
 	
-	/**
-	 * @return
-	 */
 	public int getBoxID() {
 		return BoxID;
 	}
 	
-	/**
-	 * @return
-	 */
 	public Cell getNext() {
 		return next;
 	}
 	
-	/**
-	 * @param c
-	 */
 	public void setNext(Cell c) {
 		next = c;
 	}
 	
-	/**
-	 * @return
-	 */
 	public Cell getPrev() {
 		return prev;
 	}
 	
-	/**
-	 * @param c
-	 */
 	public void setPrev(Cell c) {
 		prev = c;
 	}
 	
-	/**
-	 * @return
-	 */
 	public int getNextValueToTest() {
 		
 		for(int i = 0; i < testedValues.length; i++) {
@@ -118,9 +77,6 @@ public class Cell {
 		return 0;
 	}
 	
-	/**
-	 * @return
-	 */
 	public boolean getIsFinal() {
 		return isFinal;
 	}

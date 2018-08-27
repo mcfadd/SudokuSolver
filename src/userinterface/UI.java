@@ -1,4 +1,4 @@
-package com.braintobytes.userinterface;
+package userinterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,9 +28,9 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.braintobytes.utils.SaveGame;
-import com.braintobytes.utils.Solver;
-import com.braintobytes.utils.Util;
+import utils.SaveGame;
+import utils.Solver;
+import utils.Util;
 
 
 @SuppressWarnings("serial")
@@ -119,7 +119,7 @@ public class UI extends JFrame {
 		this.setResizable(false);
 
 		try {
-			URL resource = getClass().getResource("../Sudoku(icon).png");
+			URL resource = getClass().getResource(".." + System.getProperty("file.separator") + "Sudoku(icon).png");
 			BufferedImage image = ImageIO.read(resource);
 			setIconImage(image);
 

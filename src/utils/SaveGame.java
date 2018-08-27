@@ -1,4 +1,4 @@
-package com.braintobytes.utils;
+package utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,8 +8,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import com.braintobytes.entities.Box;
-import com.braintobytes.userinterface.UI;
+import entities.Box;
+import userinterface.UI;
 
 public class SaveGame implements Serializable {
 

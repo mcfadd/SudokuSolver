@@ -1,4 +1,4 @@
-package com.braintobytes.userinterface;
+package userinterface;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,7 +12,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-import com.braintobytes.utils.Util;
+import utils.Util;
 
 
 @SuppressWarnings("serial")

@@ -1,6 +1,6 @@
-package com.braintobytes.main;
+package main;
 
-import com.braintobytes.userinterface.UI;
+import userinterface.UI;
 
 public class Driver {
 

@@ -1,9 +1,10 @@
-package com.braintobytes.utils;
+package utils;
 
 import javax.swing.JOptionPane;
-import com.braintobytes.entities.Box;
-import com.braintobytes.entities.Cell;
-import com.braintobytes.userinterface.UI;
+
+import entities.Box;
+import entities.Cell;
+import userinterface.UI;
 
 public class Solver {
 

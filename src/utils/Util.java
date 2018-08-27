@@ -1,4 +1,4 @@
-package com.braintobytes.utils;
+package utils;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -6,10 +6,10 @@ import java.security.SecureRandom;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.braintobytes.entities.Box;
-import com.braintobytes.entities.Cell;
-import com.braintobytes.userinterface.BoxGUI;
-import com.braintobytes.userinterface.UI;
+import entities.Box;
+import entities.Cell;
+import userinterface.BoxGUI;
+import userinterface.UI;
 
 public class Util {
 
